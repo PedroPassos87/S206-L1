@@ -35,7 +35,7 @@ describe("Testes da criação,registros e login", () => {
 
   });
 
-  it.only("Deletando user e tentando logar", () => {
+  it("Deletando user e tentando logar", () => {
     let infos = criarUser()
     cy.login(infos[0], infos[1])
     cy.get('h1.ng-binding').should("contain.text", infos[0])
