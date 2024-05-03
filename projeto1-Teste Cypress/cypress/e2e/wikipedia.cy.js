@@ -29,4 +29,23 @@ describe('Testando o site wikepedia', () => {
     cy.get('.cdx-message__content').should('contain','nome de utilizador ou a palavra-passe inseridos estão incorretos.')
 
   })
+
+  it('Acessando pagina de mudanças recentes e ocultando sidebar', () => {
+    cy.get('#ca-talk > a > span').click()                                        //clicando no botao 'Discussao' na pagina principal
+    cy.get('.mw-page-title-namespace').should('contain','Wikipédia Discussão')   //verificando se o header da pagina esta correto 
+
+    cy.get('#vector-toc-pinned-container').should('exist')   //sidebar existe
+    cy.get('#vector-toc > .vector-pinnable-header > .vector-pinnable-header-unpin-button').click()     //botao ocultar
+    cy.get('#vector-toc-pinned-container').should('not.be.visible')   //verificando se sidebar foi ocultada
+  })
+
+  it('Acessando tutorial de edição a partir da pagina inicial ', () => {
+    cy.get('.hp-welkom-2 > [href="/wiki/Ajuda:Tutorial/Edi%C3%A7%C3%A3o"]').click()     //clicando no link de edição
+    cy.get('.mw-page-title-main').should('contain','Tutorial/Edição')  //verificando titulo da pagina
+    cy.get('.mw-content-ltr > :nth-child(5)').should('contain','Editar artigos')  //verificando um dos tópicos da pagina
+
+    cy.get('tr > :nth-child(10) > a').click()                      //clicando no link de formatação
+    cy.get('.mw-page-title-main').should('contain','Formatação')   //verificando titulo da pagina
+  })
+
 })
