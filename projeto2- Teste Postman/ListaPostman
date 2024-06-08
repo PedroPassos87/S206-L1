@@ -1,0 +1,284 @@
+{
+	"info": {
+		"_postman_id": "364bfe6c-14b1-43d6-a693-4c855eff33f6",
+		"name": "ListaPostman",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34774038"
+	},
+	"item": [
+		{
+			"name": "get all",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Validar estrutura e valores do JSON\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"\r",
+							"    // Verificar se a resposta é um array\r",
+							"    pm.expect(Array.isArray(jsonData)).to.be.true;\r",
+							"\r",
+							"    // Verificar se o array tem pelo menos 1 item\r",
+							"    pm.expect(jsonData.length).to.be.above(0);\r",
+							"\r",
+							"    jsonData.forEach(function(item) {\r",
+							"        // Verificar se cada item tem as propriedades id, name e data\r",
+							"        pm.expect(item).to.have.property(\"id\");\r",
+							"        pm.expect(item).to.have.property(\"name\");\r",
+							"        pm.expect(item).to.have.property(\"data\");\r",
+							"\r",
+							"        // Verificar se o id é uma string\r",
+							"        pm.expect(item.id).to.be.a(\"string\");\r",
+							"\r",
+							"        // Verificar se o name é uma string\r",
+							"        pm.expect(item.name).to.be.a(\"string\");\r",
+							"\r",
+							"    });\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.restful-api.dev/objects",
+					"protocol": "https",
+					"host": [
+						"api",
+						"restful-api",
+						"dev"
+					],
+					"path": [
+						"objects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "um objeto",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Validar estrutura e valores do JSON\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"\r",
+							"    // Verificar se a resposta é um objeto\r",
+							"    pm.expect(jsonData).to.be.an('object');\r",
+							"\r",
+							"    // Verificar se o objeto tem as propriedades id, name e data\r",
+							"    pm.expect(jsonData).to.have.property(\"id\");\r",
+							"    pm.expect(jsonData).to.have.property(\"name\");\r",
+							"    pm.expect(jsonData).to.have.property(\"data\");\r",
+							"\r",
+							"    // Verificar os valores das propriedades id e name\r",
+							"    pm.expect(jsonData.id).to.eql(\"3\");\r",
+							"    pm.expect(jsonData.name).to.eql(\"Apple iPhone 12 Pro Max\");\r",
+							"\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.restful-api.dev/objects/3",
+					"protocol": "https",
+					"host": [
+						"api",
+						"restful-api",
+						"dev"
+					],
+					"path": [
+						"objects",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "objeto que nao existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.restful-api.dev/objects/inexistente",
+					"protocol": "https",
+					"host": [
+						"api",
+						"restful-api",
+						"dev"
+					],
+					"path": [
+						"objects",
+						"inexistente"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "criando objeto",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"name\": \"pc mini do good\",\r\n   \"data\": {\r\n      \"year\": 2022,\r\n      \"price\": 8000,\r\n      \"CPU model\": \"Intel Core i9\",\r\n      \"Hard disk size\": \"1 TB\"\r\n   }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.restful-api.dev/objects",
+					"protocol": "https",
+					"host": [
+						"api",
+						"restful-api",
+						"dev"
+					],
+					"path": [
+						"objects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update objeto criado",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validar estrutura e valores do JSON\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"\r",
+							"    // Verificar se a resposta é um objeto\r",
+							"    pm.expect(jsonData).to.be.an('object');\r",
+							"\r",
+							"    // Verificar se o objeto tem as propriedades id, name e data\r",
+							"    pm.expect(jsonData).to.have.property(\"id\");\r",
+							"    pm.expect(jsonData).to.have.property(\"name\");\r",
+							"    pm.expect(jsonData).to.have.property(\"data\");\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"data\": {\r\n      \"color\": \"silver\"\r\n   }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.restful-api.dev/objects/ff8081818feaa6c4018ff9f7d4ee157b",
+					"protocol": "https",
+					"host": [
+						"api",
+						"restful-api",
+						"dev"
+					],
+					"path": [
+						"objects",
+						"ff8081818feaa6c4018ff9f7d4ee157b"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "falha no delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 405\", function () {\r",
+							"    pm.response.to.have.status(405);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://api.restful-api.dev/objects/6",
+					"protocol": "https",
+					"host": [
+						"api",
+						"restful-api",
+						"dev"
+					],
+					"path": [
+						"objects",
+						"6"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
